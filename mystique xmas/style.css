@@ -1,0 +1,36 @@
+/*
+Theme Name: Mystique XMAS mod
+Theme URI: http://digitalnature.ro/projects/mystique
+Description:  XMAS child theme for Mystique... Designed by <a href="http://digitalnature.ro/">digitalnature</a>.
+Version: 1.0
+Author: digitalnature
+Author URI: http://digitalnature.ro
+Tags: seasonal, light, white, two-columns, three-columns, fixed-width, flexible-width, right-sidebar, left-sidebar, theme-options, threaded-comments,  translation-ready, custom-header
+Template: mystique
+
+	Mystique Wordpress theme
+	  http://digitalnature.ro/projects/mystique
+
+	Theme designed by digitalnature. See the project page for more info and updates
+
+	Both the design and code are released under GPL.
+    http://www.opensource.org/licenses/gpl-license.php
+
+*/
+
+
+@import url('../mystique/style.css');
+
+body{background:#165bc7 url(images/header.jpg) repeat-x center top;}
+#header{height:300px;}
+
+#site-title{top:120px;}
+#site-title #logo a{text-shadow: 0px 0px 16px rgba(255,255,255,1);}
+#site-title #logo a:hover{text-shadow: 0px 0px 16px rgba(255,255,255,0.5);}
+
+#page{min-height:750px;background:transparent url(images/header-center.jpg) no-repeat center top;}
+#xmas{background:transparent url(images/footer-bg.jpg) repeat-x center bottom;}
+#xmas-right{background:transparent url(images/footer-right.jpg) no-repeat right bottom;}
+#xmas-left{background:transparent url(images/footer-left.jpg) no-repeat left bottom;}
+
+#main-inside{min-height:450px;}

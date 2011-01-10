@@ -533,6 +533,22 @@ li.ping a{font-weight:bold;font-size:115%;text-decoration:none;}
 #cancel-reply{display:none;}
 #comment_post_status{font-weight:bold;}
 
+#author-info .row {
+	float: left;
+}
+
+#gravbox {
+float:left; margin-right:6px; width:80px; height:80px; background:url(http://www.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=80.png);}
+
+#gravbox .avatar {
+margin:0; padding:0;}
+
+#gravbox .nogravatar {
+text-align:center; font-weight:bold; }
+
+#gravbox img {
+border:1px solid black; }
+
 
 
 /* PAGE/COMMENT NAVIGATION */

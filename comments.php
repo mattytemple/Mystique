@@ -33,11 +33,11 @@
 ?>
 
 <!-- tabbed content -->
-<div class="tabbed-content post-tabs clearfix" id="post-tabs">
+<div class="tabbed-content post-tabs clear-block" id="post-tabs">
 
  <?php if(($jquery) && (($comments || comments_open()) || (pings_open() && $numPingBacks>0))): // no tabs if jquery is disabled ?>
  <!-- tab navigation (items must be in reverse order because of the tab-design) -->
- <div class="tabs-wrap clearfix">
+ <div class="tabs-wrap clear-block">
   <ul class="tabs">
     <?php if(($rp_query) && ($rp_query->have_posts())): ?><li class="related-posts"><a href="#section-relatedPosts"><span><?php _e('Related Posts','mystique'); ?></span></a></li><?php endif; ?>
     <?php if($numPingBacks>0): ?><li class="trackbacks"><a href="#section-trackbacks"><span><?php printf(__('Trackbacks (%s)','mystique'),$numPingBacks); ?></span></a></li><?php endif; ?>
@@ -46,7 +46,7 @@
  </div>
  <!-- /tab nav -->
  <?php elseif(!$jquery && (($comments || comments_open()))): ?>
- <div class="clearfix">
+ <div class="clear-block">
   <h2 class="alignright"><?php printf(__('Comments (%s)','mystique'),$numComments); ?></h2>
  </div>
  <?php endif; ?>
@@ -56,21 +56,21 @@
 
   <?php if ($comments || comments_open()): ?>
   <!-- comments -->
-  <div class="section clearfix" id="section-comments">
+  <div class="section clear-block" id="section-comments">
 
     <?php
      if ($numComments>0): ?>
      <div id="comments-wrap">
-      <div class="clearfix">
+      <div class="clear-block">
        <ul id="comments" class="comments">
-        <?php wp_list_comments('type=comment&callback=mystique_list_comments'); ?>
+        <?php wp_list_comments('type=comment&callback=mystique_list_comments', $comments); ?>
        </ul>
       </div>
      <?php
       if (get_option('page_comments')):
        $comment_pages = paginate_comments_links('echo=0');
        if ($comment_pages): ?>
-       <div class="comment-navigation clearfix">
+       <div class="comment-navigation clear-block">
     	 <?php echo $comment_pages; ?>
        </div>
        <?php
@@ -94,19 +94,9 @@
      <?php else: ?>
 
      <!-- comment form -->
-     <div class="comment-form clearfix" id="respond">
-      <?php if($jquery): // need to improve this ?>
-      <script type="text/javascript">
-      /* <![CDATA[ */
-      function checkvalues(){
-       if(jQuery('#field-author').val()=='<?php _e("Name (required)","mystique"); ?>') jQuery('#field-author').val('');
-       if(jQuery('#field-email').val()=='<?php _e("E-mail (required, will not be published)","mystique"); ?>') jQuery('#field-email').val('');
-       if(jQuery('#field-url').val()==('<?php _e("Website","mystique"); ?>' || 'http://')) jQuery('#field-url').val('');
-      }
-      /* ]]> */
-      </script>
-      <?php endif; ?>
-      <form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform" <?php if($jquery): ?>onsubmit="checkvalues();"<?php endif; ?>>
+     <div class="comment-form clear-block" id="respond">
+     
+      <form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
         <?php if ($user_ID): ?>
           <?php if (function_exists('wp_logout_url')) $logout_link = wp_logout_url(); else $logout_link = get_option('siteurl') . '/wp-login.php?action=logout';	?>
       	  <p>
@@ -124,7 +114,8 @@
           </p>
           <?php endif; ?>
           <div id="author-info"<?php if ($comment_author != "" && $jquery): ?> style="display:none;"<?php endif; ?>>
-            <div class="row">
+<?php if (function_exists('gravbox')) gravbox(); ?>            
+<div class="row">
               <?php if(!$jquery): ?><label for="author"> <?php _e("Name (required)","mystique"); ?> </label><?php endif; ?>
               <input type="text" name="author" id="field-author" class="validate required textfield clearField" value="<?php if ($comment_author) echo $comment_author; else $jquery ? _e("Name (required)","mystique"):null; ?>" size="40" />
             </div>
@@ -145,9 +136,9 @@
         	<textarea name="comment" id="comment" class="validate required" rows="8" cols="50"></textarea>
         </div>
         <!-- /comment input -->
-        <div class="clearfix">
+        <div class="clear-block">
           <?php if (function_exists('highslide_emoticons')): ?><div id="emoticon"><?php highslide_emoticons(); ?></div><?php endif; ?>
-          <?php if (function_exists('comment_id_fields')): comment_id_fields(); endif; ?>
+          <?php comment_id_fields(); ?>
           <?php if (function_exists('math_comment_spam_protection')):  $mcsp_info = math_comment_spam_protection(); // Math Comment Spam Protection Plugin ?>
           <p><input type="text" name="mcspvalue" id="mcspvalue" value="" size="22" />
             <label for="mcspvalue"><?php  printf(__('Spam protection: Sum of %1$s + %2$s = ?', 'mystique'), $mcsp_info['operand1'],$mcsp_info['operand2']); ?></label>
@@ -197,6 +188,7 @@
   <!-- related posts -->
   <div class="section" id="section-relatedPosts">
     <?php
+        $backup = $post;
         while ($rp_query->have_posts()):
          $rp_query->the_post(); ?>
          <!-- short post -->
@@ -207,7 +199,10 @@
            <div class="post-excerpt"><?php the_excerpt(); ?></div>
   	 </div>
          <!-- /short post -->
-        <?php endwhile; ?>
+       <?php
+        endwhile;
+        $post = $backup;
+       ?>
    </div>
   <!-- /related posts -->
   <?php endif; ?>
